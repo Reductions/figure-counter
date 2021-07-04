@@ -123,6 +123,13 @@ public:
         }
     }
 
+    void clear()
+    {
+        _grid.clear();
+        _height = 0;
+        _width = 0;
+    }
+
     cell first_cell()
     {
         return cell(this, 0, 0);
@@ -152,7 +159,7 @@ public:
         {
             throw std::invalid_argument(
                 "[grid::set_row] "
-                "@values length does not match grid _width"
+                "@values length does not match grid width"
             );
         }
         _grid[row] = std::move(values);

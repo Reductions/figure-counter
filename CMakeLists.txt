@@ -17,7 +17,7 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include_directories(test PUBLIC external)
+include_directories(test.exe PUBLIC external)
 
 set(SOURCES
   test_main.cpp
@@ -32,4 +32,4 @@ set(HEADERS
   lib/grid.hpp
 )
 
-add_executable(test ${SOURCES} ${HEADERS})
+add_executable(test.exe ${SOURCES} ${HEADERS})

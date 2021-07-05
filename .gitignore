@@ -1,2 +1,5 @@
 *.out
 main.cpp
+compile_commands.json
+build/
+.cache/

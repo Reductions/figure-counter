@@ -4,12 +4,7 @@
 
 class figure_counter
 {
-    #ifdef COMPACT_GRID
     using grid_t = grid<bool>;
-    #else
-    using grid_t = grid<unsigned char>;
-    #endif
-
     using cell_t = grid_t::cell;
     size_t _counter = 0;
 public:

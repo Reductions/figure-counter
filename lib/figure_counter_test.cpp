@@ -8,17 +8,17 @@
 template <size_t SIZE>
 using bool_arr = std::array<bool, SIZE>;
 template <size_t HEIGHT, size_t WIDTH>
-static grid<bool> create_matrix(std::array<bool_arr<WIDTH>, HEIGHT> init_arr);
-static grid<bool> create_large_filled();
-static grid<bool> create_large_spiral();
+static figure_counter::grid_t create_matrix(std::array<bool_arr<WIDTH>, HEIGHT> init_arr);
+static figure_counter::grid_t create_large_filled();
+static figure_counter::grid_t create_large_spiral();
 
-static size_t count(grid<bool>& matrix);
+static size_t count(figure_counter::grid_t& matrix);
 
 TEST_SUITE("figure_counter")
 {
     TEST_CASE("can count empty matrix")
     {
-        grid<bool> matrix(0, 0);
+        figure_counter::grid_t matrix(0, 0);
         REQUIRE(count(matrix) == 0);
     }
 
@@ -125,26 +125,26 @@ TEST_SUITE("figure_counter")
 
     TEST_CASE("can handle large filled square")
     {
-        grid<bool> matrix = create_large_filled();
+        figure_counter::grid_t matrix = create_large_filled();
         REQUIRE(count(matrix) == 1);
     }
 
     TEST_CASE("can handle large spiral")
     {
-        grid<bool> matrix = create_large_spiral();
+        figure_counter::grid_t matrix = create_large_spiral();
         REQUIRE(count(matrix) == 1);
     }
 }
 
-size_t count(grid<bool>& matrix)
+size_t count(figure_counter::grid_t& matrix)
 {
     return figure_counter(std::move(matrix));
 }
 
 template <size_t HEIGHT, size_t WIDTH>
-grid<bool> create_matrix(std::array<bool_arr<WIDTH>, HEIGHT> init_arr)
+figure_counter::grid_t create_matrix(std::array<bool_arr<WIDTH>, HEIGHT> init_arr)
 {
-    grid<bool> result(HEIGHT, WIDTH);
+    figure_counter::grid_t result(HEIGHT, WIDTH);
     for(size_t row = 0; row < HEIGHT; ++row)
     {
         for(size_t column = 0; column < WIDTH; ++column)
@@ -157,19 +157,19 @@ grid<bool> create_matrix(std::array<bool_arr<WIDTH>, HEIGHT> init_arr)
 
 constexpr size_t large_size = 12345;
 
-grid<bool> create_large_filled()
+figure_counter::grid_t create_large_filled()
 {
-    grid<bool> result(large_size, large_size);
+    figure_counter::grid_t result(large_size, large_size);
     for(auto cell = result.first_cell(); cell.is_valid(); ++cell)
     {
-        cell.value() = true;
+        cell.value() = 1;
     }
     return result;
 }
 
-grid<bool> create_large_spiral()
+figure_counter::grid_t create_large_spiral()
 {
-    grid<bool> result(large_size, large_size);
+    figure_counter::grid_t result(large_size, large_size);
     for(auto cell = result.first_cell(); cell.is_valid(); ++cell)
     {
         auto row = cell.row();
@@ -178,8 +178,13 @@ grid<bool> create_large_spiral()
            || (column == 0 && row % 4 == 3)
            || (column == (large_size - 1) && row % 4 == 1))
         {
-            cell.value() = true;
+            cell.value() = 1;
         }
+        else
+        {
+            cell.value() = 0;
+        }
+
     }
     return result;
 }

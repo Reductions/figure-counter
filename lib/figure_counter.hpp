@@ -4,9 +4,14 @@
 
 class figure_counter
 {
+public:
     using grid_t = grid<bool>;
+private:
     using cell_t = grid_t::cell;
+
+private:
     size_t _counter = 0;
+
 public:
     figure_counter(grid_t&& matrix);
     size_t value() const;
